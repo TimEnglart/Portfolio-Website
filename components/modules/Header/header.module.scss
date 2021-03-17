@@ -1,0 +1,78 @@
+.header {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+
+    h2 {
+        margin: 10px 30px;
+        margin-right: auto;
+    }
+
+    nav {
+        margin-right: 10%;
+
+        ul {
+            list-style: none;
+            //padding: 0px;
+            //margin: 0px;
+
+            li {
+                display: inline-block;
+        
+                // &:not(:first-child) {
+                    padding: 0px 30px;
+                
+               
+                a {
+                    position: relative;
+                    text-decoration: none;
+                    padding-bottom: 6px;
+                    &:hover {
+                        color: #E32;
+        
+                        &::before {
+                            visibility: visible;
+                            transform: scaleX(1);
+                        }
+                    }
+        
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 100%;
+                        height: 2px;
+                        bottom: 0;
+                        left: 0;
+        
+                        // border: 2px solid dimgray;
+        
+                        visibility: hidden;
+                        
+        
+                        transform: scaleX(0);
+                        // background: repeating-linear-gradient(-45deg, red 0%, yellow 7.14%, rgb(0,255,0) 14.28%,
+                        //             rgb(0,255,255) 21.4%, cyan 28.56%, blue 35.7%, magenta 42.84%, red 50%);
+                        // background-size: 1200% 2px;
+                        // animation: slide 10s linear infinite forwards;
+                        background: dimgray;
+                        transition: all 0.3s ease-in-out 0s;
+        
+        
+                        // https://stackoverflow.com/questions/48694894/drawing-border-colors-during-a-css-transition
+                      }
+                }
+            }
+        }
+    }
+}
+
+@keyframes slide {
+    0% {
+        background-position-x: 0%;
+    }
+    100% {
+        background-position-x: 600vw;
+    }
+}
