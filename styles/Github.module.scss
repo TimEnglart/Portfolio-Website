@@ -1,0 +1,61 @@
+.main {
+
+    .heading {
+        margin-bottom: 5rem;
+        text-align: right;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .updateStats {
+        margin-right: 5em;
+        p {
+            text-align: right;
+            width: auto;
+            //padding-right: 20px;
+        }
+    }
+
+
+
+    .button {
+        width: 18rem;
+        text-align: center;
+        
+        border-radius: 0.4em;
+        padding: 0.4em 60px;
+       
+        border: 2px solid transparent;
+        font-size: 0.9em;
+        outline: none;
+        transition: background-color ease-in 0.2s;
+        transition: color ease-in 0.1s;
+        
+        
+        &:enabled {
+            box-shadow: 2px 3px #999;
+            cursor: pointer;
+            background-color: rgb(84, 165, 245);
+
+            &:hover {
+                background-color: rgb(43, 141, 238);
+                color: white;
+            }
+        
+            &:active {
+                background-color: rgb(84, 165, 245);
+                //border: 2px solid black;
+                box-shadow: 1px 2px #666;
+                transform: translateY(1px);
+            }
+        }
+        &:disabled {
+            color: rgb(139, 138, 138);
+            background-color: rgb(97, 97, 97);
+        }
+    
+        
+    }
+}
