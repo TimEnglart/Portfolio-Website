@@ -12,6 +12,9 @@ export default function Github() {
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [lastUpdated, setLastUpdated] = useState("")
 
+
+    const githubLanguageComponent = useRef(null);
+
     let nextUpdate = new Date();
     let updateClock = null;
 
@@ -39,9 +42,14 @@ export default function Github() {
         setButtonText("Updated Statistics");
     }
 
+    function isLoading(): boolean {
+        return false;
+    }
 
 
-    return <>
+    return isLoading() ? <h1> Loading... </h1> : 
+    
+    <>
             <Head>
                 <title>Github</title>
                 <link rel="icon" href="/favicon.ico" />
@@ -49,7 +57,7 @@ export default function Github() {
             <main className={styles.main}>
 
                 <div className={styles.heading}>
-                    <h1>Github Statistics - <a href="">TimEnglart</a></h1>
+                    <h1>Github Statistics - <a href="https://github.com/TimEnglart">TimEnglart</a></h1>
                     <div className={styles.updateStats}>
                         <button disabled={buttonDisabled} onClick={updateStats} className={styles.button}>
                             { buttonText }
@@ -78,7 +86,7 @@ export default function Github() {
                 
                     */
                 }
-                <GithubLanguages sort="desc" sortMethod="Bytes"/>
+                <GithubLanguages sort="desc" sortMethod="Bytes" ref={githubLanguageComponent}/>
                 {
                     // Most Used Programming Languages
 

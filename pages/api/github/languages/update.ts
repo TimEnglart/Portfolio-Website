@@ -1,10 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import mongoose, { Model, Schema } from 'mongoose'
-
-import GithubRepo from '@/api/models/GithubRepo'
-import GithubUserLanguages from '@/api/models/GithubUserLanguages'
-
+import IGithubRepo from '@/api/models/GithubRepo'
+import IGithubLanguageSchema from '@/api/models/GithubUserLanguages'
+import { MongoDBHandler } from '@/api/.';
 export interface Owner {
     login: string;
     id: number;
@@ -261,12 +259,8 @@ async function update(): Promise<MyResponse> {
     
     for (const language of Object.keys(languageTotalBytes)) {
         languageTotalBytes[language].percent = languageTotalBytes[language].bytes / totalBytes * 100;
-
-        await GithubUserLanguages.findByIdAndUpdate(
-            language, 
-            { ...languageTotalBytes[language], _id: language }, 
-            { upsert: true, new: true, setDefaultsOnInsert: true, useFindAndModify: false }
-        );
+        const collection = await MongoDBHandler.instance.collection<IGithubLanguageSchema>(MongoDBHandler.Collections.GithubLanguageStatistics);
+        await collection.findOneAndUpdate({ _id: language }, { $set: { ...languageTotalBytes[language] } }, { upsert: true });
     }
     response = {
         repos: returnRepos,

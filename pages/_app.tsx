@@ -10,7 +10,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
       <RainbowBar/>
-      
       <div className={styles.container}>
       <Header/>
         <Component {...pageProps} />

@@ -1,9 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+export default interface IGithubDatabaseState {
+    lastUpate: Date;
+}
 
-
-const portfolio_stateSchema = new Schema({
-    lastUpdate: Date,
-});
-
-
-export default mongoose.model('portfolio_state') || mongoose.model('portfolio_state', portfolio_stateSchema);

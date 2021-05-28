@@ -1,13 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import GithubUserLanguages from '@/api/models/GithubUserLanguages';
+import IGithubLanguageSchema from '@/api/models/GithubUserLanguages';
+import { MongoDBHandler } from '@/api/.';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import initConnection from '@/api/.'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const amount = Number(req.query?.amount ?? 3), start = Number(req.query?.start ?? 0);
-    initConnection();
-    const records = await GithubUserLanguages.find();//.sort({bytes: "desc"}).limit(amount + start);
+    const collection = await MongoDBHandler.instance.collection<IGithubLanguageSchema>(MongoDBHandler.Collections.GithubLanguageStatistics);
 
-    res.status(200).send(records);
+    const records = collection.find();//.sort({bytes: "desc"}).limit(amount + start);
+    const ret = await records.toArray();
+    res.status(200).send(ret);
 }

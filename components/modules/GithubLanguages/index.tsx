@@ -1,5 +1,5 @@
 import style from './githulanguages.module.scss'
-import GithubUserLanguages, { IGithubLanguages, IGithubLanguagesModel } from '@/api/models/GithubUserLanguages'
+import IGithubLanguageSchema from '@/api/models/GithubUserLanguages'
 import { CSSProperties, HTMLProps, useEffect, useState } from 'react';
 import mongoose, { Document } from 'mongoose'
 
@@ -7,20 +7,19 @@ import styled from 'styled-components';
 import { IGithubLanguage } from '@/pages/api/github/languages/colors';
 
 
+import ProgressBar from '@/components/elements/ProgressBar';
+
 interface IProps extends HTMLProps<any> {
     sortMethod?: "Bytes" | "Projects" | "Name";
     sort?: "asc" | "desc";
 }
 
-interface MyCustomCSS extends CSSProperties {
-    '--my-css-var': string;
-}
 
 
 
 function GithubLanguages(props: IProps) {
 
-    const [languages, setLanguages] = useState<IGithubLanguages[]>([]);
+    const [languages, setLanguages] = useState<IGithubLanguageSchema[]>([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -52,7 +51,7 @@ function GithubLanguages(props: IProps) {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
-    function sort(value1: IGithubLanguages, value2: IGithubLanguages): number {
+    function sort(value1: IGithubLanguageSchema, value2: IGithubLanguageSchema): number {
         const sortDesc = (props.sort || "desc") === "desc"
         function compareString(a: string, b: string): number {
             for (let i = 0; i < Math.min(a.length, b.length); i++) {
@@ -94,7 +93,9 @@ function GithubLanguages(props: IProps) {
         getLanguages();
     }, []);
 
-    return <div className={style.grid}>
+    return (
+        //!loading &&
+        <div className={style.grid}>
         {
             // Most Used Programming Languages
 
@@ -119,17 +120,19 @@ function GithubLanguages(props: IProps) {
             */
         }
         {
+            
             languages.sort(sort).map(languageData => (
                 <div className={style.card} key={languageData._id}>
                     <h3 style={{ color: githubColors[languageData._id].color }}>{languageData._id}</h3>
-                    <ProgressContainer color={githubColors[languageData._id].color} className={style.progress_conatiner}>
-                        <progress value={languageData.percent > 2 ? languageData.percent : 2} max={100} className={style.progress} />
-                    </ProgressContainer>
+
+                    <ProgressBar fillColor={githubColors[languageData._id].color} bgColor="#A9A9A9" percent={(languageData.percent > 2 ? languageData.percent : 2)}/>
+
                     <h3><em>{languageData.percent.toFixed(0)}%</em> of Source Code in my Github Repos</h3>
                     <h3><em>{languageData.projects}</em> Project Implementations</h3>
-                    <h3><em>{formatBytes(languageData.bytes)}</em> of Sorce Code</h3>
+                    <h3><em>{formatBytes(languageData.bytes)}</em> of Source Code</h3>
                 </div>
             ))
+            
         }
         {
             loading &&
@@ -138,7 +141,7 @@ function GithubLanguages(props: IProps) {
             </h1>
         }
 
-    </div>
+    </div>)
 }
 
 const ProgressContainer = styled.div`

@@ -13,7 +13,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "mongodb": "^3.6.5",
+    "mongodb": "^3.6.7",
     "mongoose": "^5.12.0",
     "next": "10.0.9",
     "react": "17.0.1",

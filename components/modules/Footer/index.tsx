@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
+
+const yearCreated = 2020, yearNow = new Date().getFullYear();
 export default class Footer extends React.Component {
+
     render() {
       return (
         <footer className={style.footer}>
@@ -16,7 +19,11 @@ export default class Footer extends React.Component {
             </ul>
           </nav>
           <div className={style.copyright}>
-          © Tim Englart<span className={style.year}>{ new Date().getFullYear() }</span>
+          © Tim Englart<span className={style.year}>{ 
+          
+          yearCreated == yearNow ? `${yearNow}` : `${yearCreated} - ${yearNow}`
+          
+          }</span>
           </div>
         </footer>
       );
