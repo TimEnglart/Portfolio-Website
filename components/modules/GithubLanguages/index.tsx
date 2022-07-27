@@ -147,14 +147,4 @@ function GithubLanguages(props: IProps) {
         </div>)
 }
 
-const ProgressContainer = styled.div`
-    progress[value] {
-        color: ${props => props.color};
-        ::-moz-progress-bar,  { 
-            background: ${props => props.color}; 
-        }
-        ::-webkit-progress-value { 
-            background: ${props => props.color}; 
-        }
-    }`
 export default GithubLanguages;

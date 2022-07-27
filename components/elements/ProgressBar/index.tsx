@@ -12,7 +12,7 @@ interface ProgressBarBackgroundProps {
 }
 
 const ProgressBarBackground = styled.div<ProgressBarBackgroundProps>`
-  background-color: ${(props) => props.backgroundColor}
+  background-color: ${(props) => props.backgroundColor};
   position: relative;
   height: 20px;
   width: 100%;
@@ -28,7 +28,7 @@ const ProgressBarForeground = styled.div<ProgressBarForegroundProps>`
   text-align: right;
 
   width: ${props => props.width};
-  background-color: ${props => props.backgroundColor}
+  background-color: ${props => props.backgroundColor};
 `;
 
 const ProgessBarLabel = styled.span`
@@ -44,15 +44,6 @@ const ProgessBarLabel = styled.span`
 
 const ProgressBar = (props: ProgressBarProps) => {
   const { bgColor, fillColor, percent } = props;
-
-  const containerStyles: React.CSSProperties = {
-    backgroundColor: bgColor,
-  }
-
-  const fillerStyles: React.CSSProperties = {
-    width: `${percent}%`,
-    backgroundColor: fillColor,
-  }
 
   return (
     <ProgressBarBackground backgroundColor={bgColor}>

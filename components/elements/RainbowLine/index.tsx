@@ -2,14 +2,12 @@ import styled, { keyframes } from 'styled-components';
 
 
 const slideKeyframe = keyframes`
-@keyframes slide {
-    0% {
+ 0% {
         background-position-x: 0%;
     }
     100% {
         background-position-x: 600vw;
-    }
-}`;
+    }`;
 
 
 const RainbowBar = styled.div`
