@@ -6,7 +6,7 @@ const {
     mdb_password,
     mdb_cluster,
     mdb_database,
- } = process.env;
+} = process.env;
 
 const mdb_connection_string = `mongodb+srv://${mdb_username}:${mdb_password}@${mdb_cluster}/${mdb_database}?poolSize=20&retryWrites=true&w=majority`;
 
@@ -22,8 +22,8 @@ export class MongoDBHandler {
 
 
     public async connect(): Promise<void> {
-        console.log("Hello")
-        if(!this.client)
+        console.log(mdb_connection_string);
+        if (!this.client)
             this.client = new MongoClient(mdb_connection_string, { useNewUrlParser: true, useUnifiedTopology: true });
         try {
             await this.client.connect();
@@ -36,7 +36,7 @@ export class MongoDBHandler {
     }
 
     static get instance(): MongoDBHandler {
-        if(!MongoDBHandler._instance) 
+        if (!MongoDBHandler._instance)
             MongoDBHandler.instance = new MongoDBHandler();
         return MongoDBHandler._instance;
     }
@@ -45,7 +45,7 @@ export class MongoDBHandler {
     }
 
     public async collection<T = any>(collectionName: string): Promise<Collection<T>> {
-        if(!this.client || !this.client.isConnected())
+        if (!this.client || !this.client.isConnected())
             await this.connect();
         return this._db.collection<T>(collectionName);
     }
@@ -63,4 +63,3 @@ export class MongoDBHandler {
 
 
 export default MongoDBHandler;
-

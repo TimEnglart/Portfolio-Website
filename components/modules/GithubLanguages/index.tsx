@@ -9,6 +9,7 @@ import { IGithubLanguage } from '@/pages/api/github/languages/colors';
 
 import ProgressBar from '@/components/elements/ProgressBar';
 
+
 interface IProps extends HTMLProps<any> {
     sortMethod?: "Bytes" | "Projects" | "Name";
     sort?: "asc" | "desc";
@@ -35,6 +36,7 @@ function GithubLanguages(props: IProps) {
         const gitColors = await fetch(`/api/github/languages/colors`);
         const colorsJson = await gitColors.json();
 
+        console.log(languages);
         setGithubColors(colorsJson);
         setLanguages(languages);
 
@@ -96,52 +98,53 @@ function GithubLanguages(props: IProps) {
     return (
         //!loading &&
         <div className={style.grid}>
-        {
-            // Most Used Programming Languages
+            {
+                // Most Used Programming Languages
 
-            /*
-                EXAMPLE LAYOUT
-        
-                Typescript      [============-------] 60.2% (▽ Expand)
-
-                    Total Bytes Written in Language: x
-                    Project Implementations: x  
-
-
-                C#              [=======------------] 25.8%
-        
-                                    
-                                    (▽ Load More)
-        
-        
-        
-                Progress Bar Colored to Github Programming Color
-                Load X Amount (5) then make user press button to get more
-            */
-        }
-        {
+                /*
+                    EXAMPLE LAYOUT
             
-            languages.sort(sort).map(languageData => (
-                <div className={style.card} key={languageData._id}>
-                    <h3 style={{ color: githubColors[languageData._id].color }}>{languageData._id}</h3>
-
-                    <ProgressBar fillColor={githubColors[languageData._id].color} bgColor="#A9A9A9" percent={(languageData.percent > 2 ? languageData.percent : 2)}/>
-
-                    <h3><em>{languageData.percent.toFixed(0)}%</em> of Source Code in my Github Repos</h3>
-                    <h3><em>{languageData.projects}</em> Project Implementations</h3>
-                    <h3><em>{formatBytes(languageData.bytes)}</em> of Source Code</h3>
-                </div>
-            ))
+                    Typescript      [============-------] 60.2% (▽ Expand)
+    
+                        Total Bytes Written in Language: x
+                        Project Implementations: x  
+    
+    
+                    C#              [=======------------] 25.8%
             
-        }
-        {
-            loading &&
-            <h1>
-                Loading...
-            </h1>
-        }
+                                        
+                                        (▽ Load More)
+            
+            
+            
+                    Progress Bar Colored to Github Programming Color
+                    Load X Amount (5) then make user press button to get more
+                */
+            }
+            {console.log(languages)}
+            {
 
-    </div>)
+                languages.sort(sort).map(languageData => (
+                    <div className={style.card} key={languageData._id}>
+                        <h3 style={{ color: githubColors[languageData._id].color }}>{languageData._id}</h3>
+
+                        <ProgressBar fillColor={githubColors[languageData._id].color} bgColor="#A9A9A9" percent={(languageData.percent > 2 ? languageData.percent : 2)} />
+
+                        <h3><em>{languageData.percent.toFixed(0)}%</em> of Source Code in my Github Repos</h3>
+                        <h3><em>{languageData.projects}</em> Project Implementations</h3>
+                        <h3><em>{formatBytes(languageData.bytes)}</em> of Source Code</h3>
+                    </div>
+                ))
+
+            }
+            {
+                loading &&
+                <h1>
+                    Loading...
+                </h1>
+            }
+
+        </div>)
 }
 
 const ProgressContainer = styled.div`

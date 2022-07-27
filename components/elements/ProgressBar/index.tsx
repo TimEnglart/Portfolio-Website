@@ -1,15 +1,49 @@
 import React from 'react';
-import style from './progressbar.module.scss';
+import styled from 'styled-components';
 
 interface ProgressBarProps {
-    bgColor: string;
-    fillColor: string;
-    percent: number;
+  bgColor: string;
+  fillColor: string;
+  percent: number;
 }
+
+interface ProgressBarBackgroundProps {
+  backgroundColor: string;
+}
+
+const ProgressBarBackground = styled.div<ProgressBarBackgroundProps>`
+  background-color: ${(props) => props.backgroundColor}
+  position: relative;
+  height: 20px;
+  width: 100%;
+  border-radius: 50px;
+  margin: 12px 0px;
+`;
+
+type ProgressBarForegroundProps = ProgressBarBackgroundProps & { width: string };
+
+const ProgressBarForeground = styled.div<ProgressBarForegroundProps>`
+  height: 100%;
+  border-radius: inherit;
+  text-align: right;
+
+  width: ${props => props.width};
+  background-color: ${props => props.backgroundColor}
+`;
+
+const ProgessBarLabel = styled.span`
+  display: block;
+  position: absolute;
+  
+  width: 100%;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+`;
 
 
 const ProgressBar = (props: ProgressBarProps) => {
-    const { bgColor, fillColor, percent } = props;
+  const { bgColor, fillColor, percent } = props;
 
   const containerStyles: React.CSSProperties = {
     backgroundColor: bgColor,
@@ -20,22 +54,15 @@ const ProgressBar = (props: ProgressBarProps) => {
     backgroundColor: fillColor,
   }
 
-//   const labelStyles: React.CSSProperties = {
-//     width: '100%',
-//     color: 'black',
-//     fontWeight: 'bold',
-//     textAlign: "center",
-//     position: "absolute",
-//     display: "block",
-//   }
-
   return (
-    <div style={containerStyles} className={style.progressbarbackground}>
-      <div style={fillerStyles} className={style.progressbarforeground}> 
-        <span className={style.progresslabel}>{`${percent.toFixed(0)}%`}</span>
-      </div>
-    </div>
+    <ProgressBarBackground backgroundColor={bgColor}>
+      <ProgressBarForeground backgroundColor={fillColor} width={`${percent}%`}>
+        <ProgessBarLabel>
+          {`${percent.toFixed(0)}%`}
+        </ProgessBarLabel>
+      </ProgressBarForeground>
+    </ProgressBarBackground>
   );
 };
-  
-  export default ProgressBar;
+
+export default ProgressBar;
