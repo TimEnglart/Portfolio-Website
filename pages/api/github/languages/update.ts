@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import IGithubRepo from '@/api/models/GithubRepo'
-import IGithubLanguageSchema from '@/api/models/GithubUserLanguages'
+import IGithubLanguageSchema, { GithubLanguageData } from '@/api/models/GithubUserLanguages'
 import { MongoDBHandler } from '@/api/.';
 export interface Owner {
     login: string;
@@ -153,11 +153,7 @@ interface ResponseRepo {
 }
 
 interface LanguageTotals {
-    [language: string]: {
-        bytes: number;
-        percent: number;
-        projects: number;
-    }
+    [language: string]: GithubLanguageData;
 }
 interface MyResponse {
     repos: ResponseRepo[];
@@ -170,7 +166,7 @@ let response: MyResponse = {
 }
 
 
-const { 
+const {
     gh_access_token,
 } = process.env;
 
@@ -221,25 +217,32 @@ async function update(): Promise<MyResponse> {
         const repoResponse = await githubfetch(`https://api.github.com/user/repos?visibility=all&sort=updated&per_page=${actualRequestOptions.per_page}&page=${currentPage++}`);
         const repos: IGuthubUserRepo[] = await repoResponse.json();
         nextPageRequired = repos.length === actualRequestOptions.per_page;
-    
+
         for (const repo of repos) { // For Every Repository on User Account
             const repoLanguagesResponse = await githubfetch(repo.languages_url);
             const repoLanguages: IGithubLanguages = await repoLanguagesResponse.json();
             let totalBytes = 0;
-            
-            
+
+
             for (const [language, bytes] of Object.entries(repoLanguages)) { // For Every Language in Repository
-                if(!languageTotalBytes[language]) 
+                if (!languageTotalBytes[language])
                     languageTotalBytes[language] = {
                         bytes: 0,
                         percent: 0,
-                        projects: 0
+                        projects: {
+                            private: 0,
+                            public: 0,
+                        }
                     };
                 languageTotalBytes[language].bytes += bytes;
-                languageTotalBytes[language].projects++;
+
+                if (repo.private)
+                    languageTotalBytes[language].projects.private++;
+                else languageTotalBytes[language].projects.public++;
+
                 totalBytes += bytes;
             }
-    
+
             returnRepos.push({
                 name: repo.name,
                 id: repo.id,
@@ -256,7 +259,7 @@ async function update(): Promise<MyResponse> {
     } while (nextPageRequired);
 
     const totalBytes = Object.values(languageTotalBytes).reduce((p, c) => p + c.bytes, 0);
-    
+
     for (const language of Object.keys(languageTotalBytes)) {
         languageTotalBytes[language].percent = languageTotalBytes[language].bytes / totalBytes * 100;
         const collection = await MongoDBHandler.instance.collection<IGithubLanguageSchema>(MongoDBHandler.Collections.GithubLanguageStatistics);

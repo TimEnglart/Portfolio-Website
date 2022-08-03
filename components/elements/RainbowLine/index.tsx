@@ -2,12 +2,13 @@ import styled, { keyframes } from 'styled-components';
 
 
 const slideKeyframe = keyframes`
- 0% {
-        background-position-x: 0%;
-    }
-    100% {
-        background-position-x: 600vw;
-    }`;
+  0% {
+      background-position-x: 0%;
+  }
+  100% {
+      background-position-x: 600vw;
+  }
+`;
 
 
 const RainbowBar = styled.div`
@@ -23,4 +24,5 @@ const RainbowBar = styled.div`
   animation: ${slideKeyframe} 10s linear infinite forwards;
 `;
 
+export { RainbowBar };
 export default RainbowBar;

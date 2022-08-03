@@ -28,27 +28,41 @@ const ListItem = styled.li`
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  svg {
-    width: 1.5em;
-    height: 1.5em;
-    transition: transform .2s ease-in-out;
-    &:hover {
-        transform: scale(1.2);
-    }
+  width: 1.5em;
+  height: 1.5em;
+  transition: transform .2s ease-in-out;
+  &:hover {
+      transform: scale(1.2);
   }
 `;
 
-const Copyright = styled.div`
+const CopyrightContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 10px 0px;
-  display: block;
-  text-align: center;
 `;
 
 const CopyrightYear = styled.span`
   padding-left: 8px;
 `;
 
-const yearCreated = 2020, yearNow = new Date().getFullYear();
+
+interface CopyrightProps {
+  name: string;
+  yearCreated: number;
+}
+
+const yearNow = new Date().getFullYear();
+const Copyright = ({ name, yearCreated }: CopyrightProps) => {
+  return <CopyrightContainer>
+    © {name}
+    <CopyrightYear>
+      {yearCreated == yearNow ? `${yearNow}` : `${yearCreated} - ${yearNow}`}
+    </CopyrightYear>
+  </CopyrightContainer>
+};
+
 
 const Footer = () => {
   return <FooterContainer>
@@ -62,13 +76,9 @@ const Footer = () => {
         </ListItem>
       </UnorderedList>
     </RedirectNavigation>
-    <Copyright>
-      © Tim Englart
-      <CopyrightYear>
-        yearCreated == yearNow ? `${yearNow}` : `${yearCreated} - ${yearNow}`
-      </CopyrightYear>
-    </Copyright>
+    <Copyright name="Tim Englart" yearCreated={2020} />
   </FooterContainer>
 }
 
+export { Footer };
 export default Footer;

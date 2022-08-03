@@ -56,7 +56,6 @@ const LabelAnchor = styled.a`
     }
 `;
 
-
 const Header = () => {
     return <HeaderContainer>
         <HeaderTitle>Tim Englart</HeaderTitle>
@@ -79,4 +78,5 @@ const Header = () => {
     </HeaderContainer>
 };
 
+export { Header };
 export default Header;
