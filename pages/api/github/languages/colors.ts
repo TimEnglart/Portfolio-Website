@@ -6,7 +6,7 @@ import YAML from 'yaml'
 export interface IGithubLanguage {
     [language: string]: {
         type: string;
-        color: string;
+        color?: string;
         extensions: string[];
         tm_scope: string;
         ace_mode: string;

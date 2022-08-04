@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const amount = Number(req.query?.amount ?? 3), start = Number(req.query?.start ?? 0);
     const collection = await MongoDBHandler.instance.collection<IGithubLanguageSchema>(MongoDBHandler.Collections.GithubLanguageStatistics);
 
-    const records = collection.find();//.sort({bytes: "desc"}).limit(amount + start);
+    const records = collection.find();
     const ret = await records.toArray();
     res.status(200).send(ret);
 }

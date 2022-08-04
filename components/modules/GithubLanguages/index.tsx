@@ -8,24 +8,25 @@ import { IGithubLanguage } from '@/pages/api/github/languages/colors';
 
 
 import ProgressBar from '@/components/elements/ProgressBar';
+import React from 'react';
 
-
+type SortDirection = "asc" | "desc";
 interface IProps extends HTMLProps<any> {
     sortMethod?: "Bytes" | "Projects" | "Name";
     sort?: "asc" | "desc";
 }
 
 const LanguageContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 3rem;
-    
-    @media (max-width: 600px) {
-      width: 100%;
-      flex-direction: column;
-    }
+display: flex;
+align - items: center;
+justify - content: center;
+flex - wrap: wrap;
+margin - top: 3rem;
+
+@media(max - width: 600px) {
+    width: 100 %;
+    flex - direction: column;
+}
 `;
 
 
@@ -41,7 +42,7 @@ function GithubLanguages(props: IProps) {
 
     async function getLanguages(amount = 3, start = 0) {
         setLoading(true);
-        const records = await fetch(`/api/github/languages/stats`); //?amount=${amount}&start=${start}`);
+        const records = await fetch(`/ api / github / languages / stats`); //?amount=${amount}&start=${start}`);
         const languages = await records.json();
 
         const gitColors = await fetch(`/api/github/languages/colors`);
@@ -81,6 +82,8 @@ function GithubLanguages(props: IProps) {
         }
     }
 
+
+
     useEffect(() => {
         getLanguages();
     }, []);
@@ -115,7 +118,7 @@ function GithubLanguages(props: IProps) {
                 */
             }
             {
-                ...cards
+                cards
             }
             {
                 loading &&

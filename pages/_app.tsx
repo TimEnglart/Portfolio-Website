@@ -9,13 +9,13 @@ import type { AppProps } from 'next/app'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
-      <RainbowBar/>
+      <RainbowBar />
       <div className={styles.container}>
-      <Header/>
+        <Header />
         <Component {...pageProps} />
-        <Footer/>
+        <Footer />
       </div>
-      
+
     </div>
   )
 }

@@ -24,18 +24,18 @@ export default function Github() {
         setButtonDisabled(true);
         const interactiveText = setInterval(() => {
             setButtonText("Updating Statistics" + ".".repeat(++i))
-            if(i >= 3) i = 0;
+            if (i >= 3) i = 0;
         }, 500);
 
         await fetch("/api/github/languages/update");
-        nextUpdate.setTime(nextUpdate.getTime() + ( 3 * 60 * 60 * 1000));
+        nextUpdate.setTime(nextUpdate.getTime() + (3 * 60 * 60 * 1000));
         updateClock = setInterval(() => {
             const timeRemaining = ((nextUpdate.getTime() - Date.now()) / 1000);
-            if(timeRemaining <= 0) {
+            if (timeRemaining <= 0) {
                 setButtonDisabled(false);
                 clearInterval(updateClock);
             }
-                
+
             else setLastUpdated(`Can Be Updated in: ${timeRemaining.toFixed(0)}s`);
         }, 1000);
         clearInterval(interactiveText);
@@ -47,9 +47,9 @@ export default function Github() {
     }
 
 
-    return isLoading() ? <h1> Loading... </h1> : 
-    
-    <>
+    return isLoading() ? <h1> Loading... </h1> :
+
+        <>
             <Head>
                 <title>Github</title>
                 <link rel="icon" href="/favicon.ico" />
@@ -60,15 +60,15 @@ export default function Github() {
                     <h1>Github Statistics - <a href="https://github.com/TimEnglart">TimEnglart</a></h1>
                     <div className={styles.updateStats}>
                         <button disabled={buttonDisabled} onClick={updateStats} className={styles.button}>
-                            { buttonText }
+                            {buttonText}
                         </button>
                         {
                             buttonDisabled && <p> {lastUpdated} </p>
                         }
                     </div>
-                    
+
                 </div>
-                
+
 
                 {
                     /*
@@ -86,7 +86,7 @@ export default function Github() {
                 
                     */
                 }
-                <GithubLanguages sort="desc" sortMethod="Bytes" ref={githubLanguageComponent}/>
+                <GithubLanguages sort="desc" sortMethod="Bytes" ref={githubLanguageComponent} />
                 {
                     // Most Used Programming Languages
 

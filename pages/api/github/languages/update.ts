@@ -171,6 +171,7 @@ const {
 } = process.env;
 
 function githubfetch(url: string): Promise<Response> {
+    console.log(gh_access_token);
     return fetch(url, {
         headers: {
             "Authorization": `token ${gh_access_token}`,
@@ -269,5 +270,6 @@ async function update(): Promise<MyResponse> {
         repos: returnRepos,
         totals: languageTotalBytes
     }
+    console.log(response);
     return response;
 }
